@@ -1,10 +1,5 @@
 #include "classrfc5322.h"
 
-ClassRFC5322::ClassRFC5322(QObject *parent) : QObject(parent)
-{
-
-}//
-
 void ClassRFC5322::parseBody(const QString &line, RFC5322MessageStruct &message)
 {
     message.body.append(line.toLocal8Bit()+"\r\n");
@@ -83,6 +78,43 @@ void ClassRFC5322::parseMessage(const QString &receivedData, RFC5322MessageStruc
     }
 }//parseMessage
 
+RFC5322MessageStruct ClassRFC5322::parseMessage(const QString &receivedData)
+{
+    RFC5322MessageStruct messageStructure;
+    PARSE_STATE parseState = NONE;
+    QStringList receivedDatList = receivedData.split("\r\n");
+
+    foreach (QString line, receivedDatList) {
+        if(parseState < BODY && line.contains(':')){//header?
+            parseState = HEADER;
+        }
+        else if (parseState < BODY && line.startsWith(" ")) {
+            parseState = FWS;
+        }
+        else {
+            parseState = BODY;
+        }
+        //TODO ATTACHMENTs??
+
+        switch (parseState) {
+        case HEADER:
+            //            qDebug() << "HEADER" << line << line.indexOf(QLatin1Char(':'));
+            parseHeader(line, messageStructure);
+            break;
+        case FWS://folded white space
+            messageStructure.headerFields.last().fieldBody.append("\r\n"+line);
+            break;
+        case BODY:
+            //            qDebug() << "BODY" << line;
+            parseBody(line, messageStructure);
+            break;
+        default:
+            break;
+        }
+    }
+    return messageStructure;
+}//parseMessage
+
 QByteArray ClassRFC5322::composeMessage(const RFC5322MessageStruct message)
 {
     QByteArray returnArray;
@@ -114,3 +146,15 @@ QByteArray ClassRFC5322::generateDigest(QString messageBody)
 {
     return QCryptographicHash::hash(messageBody.toLocal8Bit().simplified(), QCryptographicHash::Md5).toHex();
 }//generateDigest
+
+QString ClassRFC5322::getFieldData(QString fieldName, RFC5322MessageStruct &messageStructure)
+{
+    QString returnString;
+    for (int i=0; i < messageStructure.headerFields.size() ; i++) {
+        if(messageStructure.headerFields.at(i).fieldName == fieldName){
+            returnString = messageStructure.headerFields.at(i).fieldBody;
+            break;
+        }
+    }
+    return returnString;
+}//getFieldData

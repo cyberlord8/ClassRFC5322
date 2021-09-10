@@ -35,8 +35,6 @@ class ClassRFC5322 : public QObject
 {
     Q_OBJECT
 private:
-//    static PARSE_STATE parseState;
-
     static void parseBody(const QString &line, RFC5322MessageStruct &message);
     static void parseHeader(const QString &headerLine, RFC5322MessageStruct &message);
     static QString getJulianDate();
@@ -44,14 +42,13 @@ private:
     static QString getDomainAddress(QString string);
 
 public:
-    explicit ClassRFC5322(QObject *parent = nullptr);
-
     static void parseMessage(const QString &receivedData, RFC5322MessageStruct &message);
+    static RFC5322MessageStruct parseMessage(const QString &receivedData);
     static QByteArray composeMessage(const RFC5322MessageStruct message);
-
     static QString generateMessageID(QString from, int msgNumber);
     static QString generateMessageID(QString from);
     static QByteArray generateDigest(QString messageBody);
+    static QString getFieldData(QString fieldName, RFC5322MessageStruct &messageStructure);
 signals:
 
 };

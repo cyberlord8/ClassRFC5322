@@ -3,6 +3,8 @@
 
 # This is a work in progress!
 
+I'll be updating as I actually start using the class in a project.
+
 Class to parse and compose RFC5322 Internet Message Format messages.
 
 Static classes may be called ClassRFC5322::methodName(paramaters);

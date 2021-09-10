@@ -5,18 +5,18 @@ Class to parse and compose RFC5322 Internet Message Format messages.
 
 Static classes may be called ClassRFC5322::methodName(paramaters);
 
+```
 struct RFC5322HeaderFieldStruct
 {
-    QString fieldName;
-    QString fieldBody;
-
+  QString fieldName;
+  QString fieldBody;
 };
 
 struct RFC5322MessageStruct
 {
-    QByteArray body;
-    QList<RFC5322HeaderFieldStruct> headerFields;
-    //TODO MIME attachments???
+QByteArray body;
+  QList<RFC5322HeaderFieldStruct> headerFields;
+  //TODO MIME attachments???
 };
 
 public:
@@ -26,9 +26,9 @@ public:
     static QString generateMessageID(QString from, int msgNumber);
     static QString generateMessageID(QString from);
     static QByteArray generateDigest(QString messageBody);
-    
+```
 Examples:
-
+```
 #include "classrfc5322.h"
 
 void composeRFC5322Message()
@@ -93,5 +93,5 @@ void parseRFC5322Message(QString receivedMessage){
     
     //do stuff with the data
 }//parseRFC5322Message
-
+```
 

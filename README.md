@@ -1,5 +1,7 @@
 # ClassRFC5322
-Qt RFC5322 Class - no dependencies
+### Qt RFC5322 Class - no dependencies
+
+# This is a work in progress!
 
 Class to parse and compose RFC5322 Internet Message Format messages.
 
@@ -29,7 +31,7 @@ public:
     static QString getFieldData(QString fieldName, RFC5322MessageStruct &messageStructure);
 
 ```
-Examples:
+## Examples:
 ```
 #include "classrfc5322.h"
 

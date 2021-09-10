@@ -49,6 +49,7 @@ public:
     static QString generateMessageID(QString from);
     static QByteArray generateDigest(QString messageBody);
     static QString getFieldData(QString fieldName, RFC5322MessageStruct &messageStructure);
+
 signals:
 
 };

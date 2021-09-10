@@ -1,3 +1,11 @@
+/*************************************************************
+**
+** Copyright (C) 2021 Timothy Millea <cyberlord8@gmail.com>
+**
+** License: GPLv3.0 or later
+**
+*************************************************************/
+
 #ifndef CLASSRFC5322_H
 #define CLASSRFC5322_H
 

@@ -1,3 +1,11 @@
+/*************************************************************
+**
+** Copyright (C) 2021 Timothy Millea <cyberlord8@gmail.com>
+**
+** License: GPLv3.0 or later
+**
+*************************************************************/
+
 #include "classrfc5322.h"
 
 void ClassRFC5322::parseBody(const QString &line, RFC5322MessageStruct &message)

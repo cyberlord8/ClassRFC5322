@@ -1,6 +1,6 @@
 /*************************************************************
 **
-** Copyright (C) 2021 Timothy Millea <cyberlord8@gmail.com>
+** Copyright (C) 2021 Timothy Millea <cyberlord@cyber-wizard.com>
 **
 ** License: GPLv3.0 or later
 **

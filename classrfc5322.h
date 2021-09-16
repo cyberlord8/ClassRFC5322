@@ -32,11 +32,11 @@ struct RFC5322MessageStruct
 
 
 enum PARSE_STATE {
-    NONE,
-    HEADER,
-    FWS,
-    BODY,
-    ATTACHMENT
+    PS_NONE,
+    PS_HEADER,
+    PS_FWS,
+    PS_BODY,
+    PS_ATTACHMENT
 };
 
 class ClassRFC5322 : public QObject
@@ -56,7 +56,11 @@ public:
     static QString generateMessageID(QString from, int msgNumber);
     static QString generateMessageID(QString from);
     static QByteArray generateDigest(QString messageBody);
-    static QString getFieldData(QString fieldName, RFC5322MessageStruct &messageStructure);
+    static QString getCurrentDate();
+
+    static QString getFieldData(const QString fieldName, RFC5322MessageStruct &messageStructure);
+    static QString getHeaderData(RFC5322MessageStruct &messageStructure);
+
 
 signals:
 

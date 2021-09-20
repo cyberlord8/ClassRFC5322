@@ -67,12 +67,14 @@ void ClassRFC5322::parseMessage(const QString &receivedData, RFC5322MessageStruc
         //TODO ATTACHMENTs??
         switch (parseState) {
         case PS_HEADER:
+            //            qDebug() << "HEADER" << line << line.indexOf(QLatin1Char(':'));
             parseHeader(line, message);
             break;
         case PS_FWS://folded white space
             message.headerFields.last().fieldBody.append("\r\n"+line);
             break;
         case PS_BODY:
+            //            qDebug() << "BODY" << line;
             parseBody(line, message);
             break;
         default:
@@ -99,12 +101,14 @@ RFC5322MessageStruct ClassRFC5322::parseMessage(const QString &receivedData)
         //TODO ATTACHMENTs??
         switch (parseState) {
         case PS_HEADER:
+            //            qDebug() << "HEADER" << line << line.indexOf(QLatin1Char(':'));
             parseHeader(line, messageStructure);
             break;
         case PS_FWS://folded white space
             messageStructure.headerFields.last().fieldBody.append("\r\n"+line);
             break;
         case PS_BODY:
+            //            qDebug() << "BODY" << line;
             parseBody(line, messageStructure);
             break;
         default:
@@ -173,4 +177,4 @@ QString ClassRFC5322::getHeaderData(RFC5322MessageStruct &messageStructure)
 QString ClassRFC5322::getCurrentDate()
 {
     return QDateTime::currentDateTimeUtc().toString(Qt::RFC2822Date);
-}//
+}//getCurrentDate

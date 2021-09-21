@@ -142,14 +142,14 @@ QByteArray ClassRFC5322::composeMessage(const RFC5322MessageStruct message)
 QString ClassRFC5322::generateMessageID(QString from, int msgNumber)
 {
     QString returnString;
-    returnString.append(getJulianDate()+"."+QString::number(msgNumber)+"."+getDomainAddress(from));
+    returnString.append("<"+getJulianDate()+"."+QString::number(msgNumber)+"."+getDomainAddress(from)+">");
     return returnString;
 }//generateMessageID
 
 QString ClassRFC5322::generateMessageID(QString from)
 {
     QString returnString;
-    returnString.append(getJulianDate()+"."+getDomainAddress(from));
+    returnString.append("<"+getJulianDate()+"."+getDomainAddress(from)+">");
     return returnString;
 }//generateMessageID
 

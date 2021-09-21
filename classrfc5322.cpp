@@ -46,7 +46,15 @@ QString ClassRFC5322::getDomainAddress(QString string)
 {
     //looking for text between < and >
     QString returnString = string;
-    returnString = returnString.remove(0,returnString.indexOf('<'));
+    if(returnString.contains('<')){
+        returnString = returnString.remove(0,returnString.indexOf('<'));
+        returnString.remove('<');
+        returnString.remove('>');
+    }
+    else if (returnString.contains(',')) {
+        returnString = returnString.remove(returnString.indexOf(','), returnString.size());
+    }
+    returnString = removeAllWhiteSpace(returnString);
     return returnString;
 }//getDomainAddress
 
@@ -165,12 +173,27 @@ QString ClassRFC5322::getFieldData(const QString fieldName, RFC5322MessageStruct
 QString ClassRFC5322::getHeaderData(RFC5322MessageStruct &messageStructure)
 {
     QString returnString;
+    QString tempDigest = ClassRFC5322::generateDigest(messageStructure.body);
     for (int i=0; i < messageStructure.headerFields.size() ; i++) {
         if(messageStructure.headerFields.at(i).fieldName.startsWith('_'))
             continue;
-        returnString.append(messageStructure.headerFields.at(i).fieldName+": ");
-        returnString.append(messageStructure.headerFields.at(i).fieldBody+"\r\n");
+        if(messageStructure.headerFields.at(i).fieldName == "MD5"){
+            if(messageStructure.headerFields.at(i).fieldBody == tempDigest){
+                returnString.append(messageStructure.headerFields.at(i).fieldName+": ");
+                returnString.append(messageStructure.headerFields.at(i).fieldBody+" [PASS]\r\n");
+            }
+            else {
+                returnString.append(messageStructure.headerFields.at(i).fieldName+": ");
+                returnString.append(messageStructure.headerFields.at(i).fieldBody+" [FAIL]\r\n");
+            }
+        }
+        else {
+            returnString.append(messageStructure.headerFields.at(i).fieldName+": ");
+            returnString.append(messageStructure.headerFields.at(i).fieldBody+"\r\n");
+        }
     }
+    returnString.replace('<', "&lt");
+    returnString.replace('>', "&gt");
     return returnString;
 }//getHeaderData
 

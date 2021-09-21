@@ -15,22 +15,40 @@
 #include <QDateTime>
 #include <QCryptographicHash>
 
+/**
+ * @brief The RFC5322HeaderFieldStruct struct - contains the header field info
+ */
 struct RFC5322HeaderFieldStruct
 {
+    /**
+     * @brief fieldName - stores the field name
+     */
     QString fieldName;
+    /**
+     * @brief fieldBody - stores the field data
+     */
     QString fieldBody;
-
 };
 
+/**
+ * @brief The RFC5322MessageStruct struct - RFC5322 message structure
+ */
 struct RFC5322MessageStruct
 {
+    /**
+     * @brief body - stores the message body
+     */
     QByteArray body;
+    /**
+     * @brief headerFields - stores the message header fields
+     */
     QList<RFC5322HeaderFieldStruct> headerFields;
     //TODO MIME attachments???
 };
 
-
-
+/**
+ * @brief The PARSE_STATE enum - state of the parser
+ */
 enum PARSE_STATE {
     PS_NONE,
     PS_HEADER,
@@ -39,6 +57,9 @@ enum PARSE_STATE {
     PS_ATTACHMENT
 };
 
+/**
+ * @brief The ClassRFC5322 class - class to handle RFC5322 messages
+ */
 class ClassRFC5322 : public QObject
 {
     Q_OBJECT

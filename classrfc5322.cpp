@@ -18,8 +18,10 @@ void ClassRFC5322::parseHeader(const QString &line, RFC5322MessageStruct &messag
     QStringList headerLine;
     RFC5322HeaderFieldStruct headerField;
     headerLine = line.split(": ");
-    headerField.fieldName = headerLine.at(0);
-    headerField.fieldBody = " "+headerLine.at(1);
+    if(headerLine.count() > 0)
+        headerField.fieldName = headerLine.at(0);
+    if(headerLine.count() > 1)
+        headerField.fieldBody = " "+headerLine.at(1);
     message.headerFields.append(headerField);
 }//parseHeader
 
@@ -132,9 +134,7 @@ QByteArray ClassRFC5322::composeMessage(const RFC5322MessageStruct message)
     for (int i=0; i<message.headerFields.size() ; i++) {
         returnArray.append(message.headerFields.at(i).fieldName.toLocal8Bit() + ": " +
                            message.headerFields.at(i).fieldBody.toLocal8Bit() + "\r\n");
-
     }
-
     returnArray.append("\r\n" + message.body);
     return returnArray;
 }//composeMessage
@@ -194,6 +194,8 @@ QString ClassRFC5322::getHeaderData(RFC5322MessageStruct &messageStructure)
     }
     returnString.replace('<', "&lt");
     returnString.replace('>', "&gt");
+    returnString.replace("[PASS]","<span style=\"color:green;\">[PASS]</span>");
+    returnString.replace("[FAIL]","<span style=\"color:red;\">[FAIL]</span>");
     return returnString;
 }//getHeaderData
 

@@ -74,7 +74,7 @@ void composeRFC5322Message()
     //add other optional fields if needed
     
     headerField.fieldName = "Date";
-    headerField.fieldBody = QDateTime::currentDateTimeUtc().toString(Qt::RFC2822Date);
+    headerField.fieldBody = ClassRFC5322::getCurrentDate();
     messageStruct.headerFields.append(headerField);
     
     headerField.fieldName = "Subject";
